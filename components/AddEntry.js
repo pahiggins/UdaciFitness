@@ -6,6 +6,7 @@ import EntrySlider from './EntrySlider';
 import EntryStepper from './EntryStepper';
 import DateHeader from './DateHeader';
 import TextButton from './TextButton';
+import { submitEntry, removeEntry } from '../utils/api';
 
 function SubmitBtn({ onPress }) {
   return (
@@ -71,7 +72,9 @@ export default class AddEntry extends Component {
       eat: 0,
     }));
     // Navigate to home
-    // Save to DB
+
+    submitEntry({ key, entry });
+
     // Clear local notifications
   }
 
@@ -80,7 +83,7 @@ export default class AddEntry extends Component {
 
     // Update Redux
     // Navigate to home
-    // Update DB
+    removeEntry(key);
   }
 
   render() {
