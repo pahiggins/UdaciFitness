@@ -1,9 +1,19 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
-import { getMetricMetaInfo } from '../utils/helpers';
-import Slider from './Slider';
-import Stepper from './Stepper';
+import { View, TouchableOpacity, Text } from 'react-native';
+import { getMetricMetaInfo, timeToString } from '../utils/helpers';
+import EntrySlider from './EntrySlider';
+import EntryStepper from './EntryStepper';
 import DateHeader from './DateHeader';
+
+function SubmitBtn({ onPress }) {
+  return (
+    <TouchableOpacity
+      onPress={onPress}
+    >
+      <Text>SUBMIT</Text>
+    </TouchableOpacity>
+  );
+}
 
 export default class AddEntry extends Component {
   state = {
@@ -12,7 +22,7 @@ export default class AddEntry extends Component {
     swim: 0,
     sleep: 0,
     eat: 0,
-  }
+  };
 
   increment = (metric) => {
     const { max, step } = getMetricMetaInfo(metric);
@@ -46,6 +56,23 @@ export default class AddEntry extends Component {
     }));
   }
 
+  submit = () => {
+    const key = timeToString();
+    const entry = this.state;
+
+    // Update Redux
+    this.setState(() => ({
+      run: 0,
+      bike: 0,
+      swim: 0,
+      sleep: 0,
+      eat: 0,
+    }));
+    // Navigate to home
+    // Save to DB
+    // Clear local notifications
+  }
+
   render() {
     const metaInfo = getMetricMetaInfo();
 
@@ -60,12 +87,12 @@ export default class AddEntry extends Component {
             <View key={key}>
               {getIcon()}
               {type === 'slider'
-                ? <Slider
+                ? <EntrySlider
                   value={value}
                   onChange={value => this.slide(key, value)}
                   {...rest}
                 />
-                : <Stepper
+                : <EntryStepper
                   value={value}
                   onIncrement={() => this.increment(key)}
                   onDecrement={() => this.decrement(key)}
@@ -75,6 +102,7 @@ export default class AddEntry extends Component {
             </View>
           );
         })}
+        <SubmitBtn onPress={this.submit} />
       </View>
     );
   }
