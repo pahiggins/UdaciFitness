@@ -1,11 +1,11 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, Platform, StyleSheet } from 'react-native';
 import { FontAwesome, Entypo } from '@expo/vector-icons';
-import { white, purple } from '../utils/colors';
+import { white, purple, gray } from '../utils/colors';
 
 export default function Stepper({ max, unit, step, value, onIncrement, onDecrement }) {
   return (
-    <View style={[styles.row, { justifyContent: 'space-between' }]} >
+    <View style={[styles.row, { justifyContent: 'space-between' }]}>
       {Platform.OS === 'ios'
         ?
         <View style={{ flexDirection: 'row' }}>
@@ -39,8 +39,8 @@ export default function Stepper({ max, unit, step, value, onIncrement, onDecreme
         </View>
       }
       <View style={styles.metricCounter} >
-        <Text style={{ fontSize: 24, textAlign: 'center' }} >{value}</Text>
-        <Text style={{ fontSize: 18, color: 'gray' }} >{unit}</Text>
+        <Text style={{ fontSize: 24, textAlign: 'center' }}>{value}</Text>
+        <Text style={{ fontSize: 18, color: gray }}>{unit}</Text>
       </View>
     </View>
   );
