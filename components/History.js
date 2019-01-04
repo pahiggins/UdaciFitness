@@ -6,6 +6,7 @@ import { timeToString, getDailyReminderValue } from '../utils/helpers';
 import { fetchCalendarResults } from '../utils/api';
 import UdaciFitnessCalendar from 'udacifitness-calendar';
 import DateHeader from './DateHeader';
+import MetricCard from './MetricCard';
 import { white } from '../utils/colors';
 
 class History extends Component {
@@ -13,14 +14,18 @@ class History extends Component {
     const { dispatch } = this.props;
 
     fetchCalendarResults()
-      .then((entries) => dispatch(receiveEntries(entries)))
+      .then((entries) => {
+        // console.log(entries);
+        return dispatch(receiveEntries(entries))
+      })
       .then(({ entries }) => {
+        // console.log(entries);
         if (!entries[timeToString()]) {
           dispatch(addEntry({
             [timeToString()]: getDailyReminderValue()
-          }))
+          }));
         }
-      })
+      });
   }
   renderItem = ({ today, ...metrics }, formattedDate, key) => (
     <View style={styles.item}>
@@ -34,7 +39,7 @@ class History extends Component {
         </View>
         :
         <TouchableOpacity onPress={() => console.log('Pressed')}>
-          <Text>{JSON.stringify(metrics)}</Text>
+          <MetricCard metrics={metrics} date={formattedDate} />
         </TouchableOpacity>}
     </View>
   )
@@ -88,7 +93,7 @@ const styles = StyleSheet.create({
 function mapStateToProps(entries) {
   return {
     entries,
-  }
+  };
 }
 
 export default connect(mapStateToProps)(History);

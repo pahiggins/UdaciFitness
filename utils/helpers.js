@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: 20,
-  }
+  },
 });
 
 export function getMetricMetaInfo(metric) {
@@ -111,7 +111,7 @@ export function getMetricMetaInfo(metric) {
 
   return typeof metric === 'undefined'
     ? info
-    : info[metric]
+    : info[metric];
 }
 
 export function isBetween(num, x, y) {
