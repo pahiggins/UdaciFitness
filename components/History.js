@@ -18,12 +18,8 @@ class History extends Component {
     const { dispatch } = this.props;
 
     fetchCalendarResults()
-      .then((entries) => {
-        // console.log(entries);
-        return dispatch(receiveEntries(entries))
-      })
+      .then((entries) => dispatch(receiveEntries(entries)))
       .then(({ entries }) => {
-        // console.log(entries);
         if (!entries[timeToString()]) {
           dispatch(addEntry({
             [timeToString()]: getDailyReminderValue()
@@ -44,7 +40,9 @@ class History extends Component {
           </Text>
         </View>
         :
-        <TouchableOpacity onPress={() => console.log('Pressed')}>
+        <TouchableOpacity onPress={() => this.props.navigation.navigate(
+          'EntryDetail', { entryId: key }
+        )}>
           <MetricCard metrics={metrics} date={formattedDate} />
         </TouchableOpacity>}
     </View>
