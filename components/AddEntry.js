@@ -1,7 +1,13 @@
 import React, { Component } from 'react';
 import { View, TouchableOpacity, Text, Platform, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
-import { getMetricMetaInfo, timeToString, getDailyReminderValue } from '../utils/helpers';
+import {
+  getMetricMetaInfo,
+  timeToString,
+  getDailyReminderValue,
+  clearLocalNotifications,
+  setLocalNotification,
+} from '../utils/helpers';
 import { Ionicons } from '@expo/vector-icons';
 import EntrySlider from './EntrySlider';
 import EntryStepper from './EntryStepper';
@@ -84,7 +90,10 @@ class AddEntry extends Component {
 
     submitEntry({ key, entry });
 
-    // Clear local notifications
+    clearLocalNotifications()
+      .then(setLocalNotification)
+      .catch(console.log);
+
   }
 
   reset = () => {
